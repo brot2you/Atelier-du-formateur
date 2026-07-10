@@ -108,8 +108,14 @@ main{ max-width:1180px; margin:0 auto; padding:26px 20px 80px 20px; }
 }
 .modal h2{ margin:0 0 4px 0; font-size:22px; }
 .modal .dom{ font-family:'IBM Plex Mono'; font-size:11px; text-transform:uppercase; font-weight:600; margin-bottom:14px;}
-.modal p{ font-size:14.5px; line-height:1.55; color:var(--ink); }
+.modal p{ font-size:14.5px; line-height:1.55; color:var(--ink); margin:0 0 10px 0; }
 .modal .close{ float:right; background:none; border:none; font-size:20px; cursor:pointer; color:var(--ink-soft); }
+.modal h3.msec{ font-size:13px; text-transform:uppercase; letter-spacing:.4px; color:var(--red); margin:18px 0 8px 0; }
+.modal ul.mlist{ padding-left:20px; margin:0; }
+.modal ul.mlist li{ margin-bottom:9px; line-height:1.5; font-size:14px; }
+.modal ul.mlist li:last-child{ margin-bottom:0; }
+.modal .mots{ display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+.modal .mots span{ display:inline-block; background:rgba(32,42,60,.06); border-radius:10px; padding:3px 10px; font-size:12.5px; color:var(--ink-soft); }
 
 /* ---------- buttons ---------- */
 .btn{
@@ -432,11 +438,11 @@ footer.note{ max-width:1180px; margin:0 auto; padding:0 20px 40px 20px; color:va
       '<h2>' + t.nom + '</h2>' +
       '<div class="dom" style="color:' + DOMAINS[t.dom].color + '">' + DOMAINS[t.dom].label + ' · ' + t.periode + '</div>' +
       (t.bio ? '<p style="font-style:italic; color:var(--ink-soft);">' + t.bio + '</p>' : '') +
-      '<h3 style="font-size:13px; text-transform:uppercase; letter-spacing:.4px; color:var(--red); margin:16px 0 8px 0;">Concepts clés</h3>' +
+      '<h3 class="msec">Concepts clés</h3>' +
       '<div class="mots">' + conceptsHtml + '</div>' +
-      '<h3 style="font-size:13px; text-transform:uppercase; letter-spacing:.4px; color:var(--red); margin:16px 0 8px 0;">Apports pour la formation</h3>' +
-      '<ul style="padding-left:20px; margin:0;">' + apportsHtml + '</ul>' +
-      (lecturesHtml ? ('<h3 style="font-size:13px; text-transform:uppercase; letter-spacing:.4px; color:var(--red); margin:16px 0 8px 0;">Pour aller plus loin</h3><ul style="padding-left:20px; margin:0; font-size:13.5px; color:var(--ink-soft);">' + lecturesHtml + '</ul>') : '');
+      '<h3 class="msec">Apports pour la formation</h3>' +
+      '<ul class="mlist">' + apportsHtml + '</ul>' +
+      (lecturesHtml ? ('<h3 class="msec">Pour aller plus loin</h3><ul class="mlist" style="color:var(--ink-soft);">' + lecturesHtml + '</ul>') : '');
     document.getElementById('modal-bg').classList.add('active');
     document.getElementById('modal-close').addEventListener('click', closeModal);
   }
@@ -522,25 +528,24 @@ footer.note{ max-width:1180px; margin:0 auto; padding:0 20px 40px 20px; color:va
       return '<span class="theorist-tag"><span class="dot" style="background:'+DOMAINS[t.dom].color+'"></span>'+t.nom+'</span>';
     }).join('');
     var ressourcesHtml = c.ressources.map(function(x){ return '<li>'+x+'</li>'; }).join('');
-    var h3style = 'font-size:13px; text-transform:uppercase; letter-spacing:.4px; color:var(--red); margin:16px 0 8px 0;';
     modal.innerHTML =
       '<button class="close" id="modal-close">&times;</button>' +
       '<h2>' + c.label + '</h2>' +
       '<div class="dom" style="color:' + CONCEPT_CATS[c.cat].color + '">' + CONCEPT_CATS[c.cat].label + '</div>' +
       '<p>' + c.definition + '</p>' +
       (c.origines ? ('<p style="font-style:italic; color:var(--ink-soft); font-size:13.5px;">Origines : ' + c.origines + '</p>') : '') +
-      '<h3 style="' + h3style + '">Enjeux</h3>' +
-      '<ul style="padding-left:20px; margin:0;">' + enjeuxHtml + '</ul>' +
-      (exemplesHtml ? ('<h3 style="' + h3style + '">Exemples concrets</h3><ul style="padding-left:20px; margin:0;">' + exemplesHtml + '</ul>') : '') +
-      '<h3 style="' + h3style + '">Leviers de mise en œuvre</h3>' +
-      '<ul style="padding-left:20px; margin:0;">' + leviersHtml + '</ul>' +
-      '<h3 style="' + h3style + '">Points de vigilance</h3>' +
-      '<ul style="padding-left:20px; margin:0;">' + vigilanceHtml + '</ul>' +
-      (c.niveaux ? ('<h3 style="' + h3style + '">Collège / lycée</h3><p style="font-size:13.5px;">' + c.niveaux + '</p>') : '') +
-      '<h3 style="' + h3style + '">Théoriciens associés</h3>' +
-      '<div>' + theoristTags + '</div>' +
-      '<h3 style="' + h3style + '">Bibliographie & ressources</h3>' +
-      '<ul style="padding-left:20px; margin:0; font-size:13.5px; color:var(--ink-soft);">' + ressourcesHtml + '</ul>';
+      '<h3 class="msec">Enjeux</h3>' +
+      '<ul class="mlist">' + enjeuxHtml + '</ul>' +
+      (exemplesHtml ? ('<h3 class="msec">Exemples concrets</h3><ul class="mlist">' + exemplesHtml + '</ul>') : '') +
+      '<h3 class="msec">Leviers de mise en œuvre</h3>' +
+      '<ul class="mlist">' + leviersHtml + '</ul>' +
+      '<h3 class="msec">Points de vigilance</h3>' +
+      '<ul class="mlist">' + vigilanceHtml + '</ul>' +
+      (c.niveaux ? ('<h3 class="msec">Collège / lycée</h3><p style="font-size:13.5px;">' + c.niveaux + '</p>') : '') +
+      '<h3 class="msec">Théoriciens associés</h3>' +
+      '<div style="margin-top:4px;">' + theoristTags + '</div>' +
+      '<h3 class="msec">Bibliographie & ressources</h3>' +
+      '<ul class="mlist" style="color:var(--ink-soft);">' + ressourcesHtml + '</ul>';
     document.getElementById('modal-bg').classList.add('active');
     document.getElementById('modal-close').addEventListener('click', closeModal);
   }
